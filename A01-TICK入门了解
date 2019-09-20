@@ -1,0 +1,36 @@
+- 安装
+#set repo
+cat <<EOF | sudo tee /etc/yum.repos.d/influxdb.repo
+[influxdb]
+name = InfluxDB Repository - RHEL \$releasever
+baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable
+enabled = 1
+gpgcheck = 1
+gpgkey = https://repos.influxdata.com/influxdb.key
+EOF
+
+[root@node1 yum.repos.d]# yum install -y telegraf influxdb chronograf kapacitor
+Updated:
+  chronograf.x86_64 0:1.7.14-1                                                          telegraf.x86_64 0:1.12.1-1                                                         
+
+Complete!
+
+[root@node1 yum.repos.d]# rpm -qa | grep kapacitor
+kapacitor-1.5.2-1.x86_64
+
+[root@node1 yum.repos.d]# rpm -ql kapacitor-1.5.2-1.x86_64
+/etc/kapacitor       
+/etc/kapacitor/kapacitor.conf     #配置文件 
+/etc/logrotate.d/kapacitor        #日志轮询配置
+/usr/bin/kapacitor               #客户端
+/usr/bin/kapacitord               #守护进程Daemon
+/usr/bin/tickfmt       #格式化TICKscript
+/usr/lib/kapacitor
+/usr/lib/kapacitor/scripts
+/usr/lib/kapacitor/scripts/init.sh
+/usr/lib/kapacitor/scripts/kapacitor.service
+/usr/share/bash-completion/completions/kapacitor
+/var/lib/kapacitor                 #数据目录
+/var/log/kapacitor                 #日志目录
+
+
